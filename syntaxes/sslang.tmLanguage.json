@@ -6,6 +6,9 @@
 			"include": "#type-declaration"
 		},
 		{
+			"include": "#top-level-value"
+		},
+		{
 			"include": "#type-annotation"
 		},
 		{
@@ -28,9 +31,6 @@
 		},
 		{
 			"include": "#constructor"
-		},
-		{
-			"include": "#top_level_value"
 		},
 		{
 			"include": "#value"
@@ -94,16 +94,12 @@
 				}
 			]
 		},
-		"top_level_value": {
-			"match": "^[a-z][a-zA-Z0-9_]*\\b",
-			"name": "entity.name.function.top_level.elm"
-		},
 		"value": {
 			"match": "\\b[a-z][a-zA-Z0-9_]*\\b",
-			"name": "meta.value.elm"
+			"name": "meta.value.sslang"
 		},
 		"infix_op": {
-			"match": "(=|==|!=|<=|>=|<|>|\\+|-|\\*|/|%|\\^)",
+			"match": "(=|<-|==|!=|<=|>=|<|>|\\+|-|\\*|/|%|\\^)",
 			"name": "keyword.operator.sslang"
 		},
 		"constructor": {
@@ -128,39 +124,14 @@
 			"name": "meta.type.declaration.sslang",
 			"patterns": [
 				{
-					"match": "\\s+",
-					"name": "punctuation.spaces.sslang"
+					"name": "meta.type.field.sslang",
+					"match": "^\\s+([A-Z][a-zA-Z0-9_]*)\\b",
+					"captures": {
+						"1": {
+							"name": "constant.constructor.sslang"
+						}
+					}
 				},
-				{
-					"match": "\\-\\>",
-					"name": "keyword.operator.arrow.sslang"
-				},
-				{
-					"match": "\\b[a-z][a-zA-Z0-9_]*\\b",
-					"name": "variable.type.sslang"
-				},
-				{
-					"match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
-					"name": "constant.constructor.sslang"
-				},
-				{
-					"include": "#comments"
-				}
-			]
-		},
-		"type-annotation": {
-			"begin": "\\((.+)\\s*(:)\\s*",
-			"beginCaptures": {
-				"1": {
-					"name": "keyword.type.sslang"
-				},
-				"2": {
-					"name": "keyword.other.sslang"
-				}
-			},
-			"end": "\\)",
-			"name": "meta.type.annotation.sslang",
-			"patterns": [
 				{
 					"match": "\\s+",
 					"name": "punctuation.spaces.sslang"
@@ -176,6 +147,78 @@
 				{
 					"match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
 					"name": "storage.type.sslang"
+				},
+				{
+					"include": "#comments"
+				}
+			]
+		},
+		"type-annotation": {
+			"begin": "\\(([a-z][a-zA-Z0-9_]*)\\s*(:)\\s*",
+			"beginCaptures": {
+				"1": {
+					"name": "meta.value.sslang"
+				},
+				"2": {
+					"name": "keyword.other.sslang"
+				}
+			},
+			"end": "\\)",
+			"name": "meta.type.annotation.sslang",
+			"patterns": [
+				{
+					"match": "\\-\\>",
+					"name": "keyword.operator.arrow.sslang"
+				},
+				{
+					"match": "\\b[a-z][a-zA-Z0-9_]*\\b",
+					"name": "variable.type.sslang"
+				},
+				{
+					"match": "\\b[&A-Z][a-zA-Z0-9_]*\\b",
+					"name": "storage.type.sslang"
+				},
+				{
+					"match": "\\s+",
+					"name": "punctuation.spaces.sslang"
+				},
+				{
+					"include": "#comments"
+				}
+			]
+		},
+		"top-level-value": {
+			"begin": "^([a-z][a-zA-Z0-9_]*)\\b",
+			"beginCaptures": {
+				"1": {
+					"name": "entity.name.function.top_level.sslang"
+				}
+			},
+			"end": "(=)",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.operator.define.sslang"
+				}
+			},
+			"name": "meta.function.top_level.sslang",
+			"patterns": [
+				{
+					"include": "#type-annotation"
+				},
+				{
+					"include": "#value"
+				},
+				{
+					"match": "\\-\\>",
+					"name": "keyword.operator.arrow.sslang"
+				},
+				{
+					"match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
+					"name": "storage.type.sslang"
+				},
+				{
+					"match": "\\s+",
+					"name": "punctuation.spaces.sslang"
 				},
 				{
 					"include": "#comments"
