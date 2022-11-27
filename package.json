@@ -1,0 +1,25 @@
+{
+  "name": "vscode-sslang",
+  "displayName": "sslang",
+  "description": "Language support for sslang",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "sslang",
+      "aliases": ["sslang", "sslang"],
+      "extensions": [".ssl"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "sslang",
+      "scopeName": "source.sslang",
+      "path": "./syntaxes/sslang.tmLanguage.json"
+    }]
+  }
+}
