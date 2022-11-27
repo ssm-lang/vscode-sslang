@@ -125,7 +125,7 @@
 				}
 			},
 			"end": "^(?=\\S)",
-			"name": "meta.type.name.sslang",
+			"name": "meta.type.declaration.sslang",
 			"patterns": [
 				{
 					"match": "\\s+",
