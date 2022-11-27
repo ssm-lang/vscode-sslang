@@ -175,8 +175,12 @@
 					"name": "variable.type.sslang"
 				},
 				{
-					"match": "\\b[&A-Z][a-zA-Z0-9_]*\\b",
+					"match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
 					"name": "storage.type.sslang"
+				},
+				{
+					"match": "&",
+					"name": "keyword.operator.reference.sslang"
 				},
 				{
 					"match": "\\s+",
