@@ -3,18 +3,60 @@
 	"name": "sslang",
 	"patterns": [
 		{
+			"include": "#type-declaration"
+		},
+		{
+			"include": "#type-annotation"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#chars"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#infix_op"
+		},
+		{
+			"include": "#unit"
+		},
+		{
+			"include": "#constructor"
+		},
+		{
+			"include": "#top_level_value"
+		},
+		{
+			"include": "#value"
+		},
+		{
+			"comment": "Floats are always decimal",
+			"match": "\\b([0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)\\b",
+			"name": "constant.numeric.float.elm"
+		},
+		{
+			"match": "\\b([0-9]+)\\b",
+			"name": "constant.numeric.elm"
 		}
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.sslang",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.sslang",
+					"match": "\\b(if|then|else|while|do|par|loop|let|match|after|wait|fun)\\b"
+				},
+				{
+					"name": "keyword.other.sslang",
+					"match": "\\b(type|extern)\\b"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.sslang",
@@ -24,6 +66,119 @@
 				{
 					"name": "constant.character.escape.sslang",
 					"match": "\\\\."
+				}
+			]
+		},
+		"chars": {
+			"name": "string.quoted.single.sslang",
+			"begin": "'",
+			"end": "'",
+			"patterns": [
+				{
+					"name": "constant.character.escape.sslang",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.sslang",
+					"begin": "//",
+					"end": "$"
+				},
+				{
+					"name": "comment.block.sslang",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
+		},
+		"top_level_value": {
+			"match": "^[a-z][a-zA-Z0-9_]*\\b",
+			"name": "entity.name.function.top_level.elm"
+		},
+		"value": {
+			"match": "\\b[a-z][a-zA-Z0-9_]*\\b",
+			"name": "meta.value.elm"
+		},
+		"infix_op": {
+			"match": "(=|==|!=|<=|>=|<|>|\\+|-|\\*|/|%|\\^)",
+			"name": "keyword.operator.sslang"
+		},
+		"constructor": {
+			"match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
+			"name": "constant.constructor.sslang"
+		},
+		"unit": {
+			"match": "\\(\\)",
+			"name": "constant.unit.sslang"
+		},
+		"type-declaration": {
+			"begin": "^(type\\s+)([A-Z][a-zA-Z0-9_']*)\\s+",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.type.sslang"
+				},
+				"2": {
+					"name": "storage.type.sslang"
+				}
+			},
+			"end": "^(?=\\S)",
+			"name": "meta.type.name.sslang",
+			"patterns": [
+				{
+					"match": "\\s+",
+					"name": "punctuation.spaces.sslang"
+				},
+				{
+					"match": "\\-\\>",
+					"name": "keyword.operator.arrow.sslang"
+				},
+				{
+					"match": "\\b[a-z][a-zA-Z0-9_]*\\b",
+					"name": "variable.type.sslang"
+				},
+				{
+					"match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
+					"name": "constant.constructor.sslang"
+				},
+				{
+					"include": "#comments"
+				}
+			]
+		},
+		"type-annotation": {
+			"begin": "\\((.+)\\s*(:)\\s*",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.type.sslang"
+				},
+				"2": {
+					"name": "keyword.other.sslang"
+				}
+			},
+			"end": "\\)",
+			"name": "meta.type.annotation.sslang",
+			"patterns": [
+				{
+					"match": "\\s+",
+					"name": "punctuation.spaces.sslang"
+				},
+				{
+					"match": "\\-\\>",
+					"name": "keyword.operator.arrow.sslang"
+				},
+				{
+					"match": "\\b[a-z][a-zA-Z0-9_]*\\b",
+					"name": "variable.type.sslang"
+				},
+				{
+					"match": "\\b[A-Z][a-zA-Z0-9_]*\\b",
+					"name": "storage.type.sslang"
+				},
+				{
+					"include": "#comments"
 				}
 			]
 		}
