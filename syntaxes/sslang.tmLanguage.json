@@ -170,16 +170,13 @@
 			]
 		},
 		"type-annotation": {
-			"begin": "\\(([a-z][a-zA-Z0-9_]*)\\s*(:)\\s*",
+			"begin": "(:)",
 			"beginCaptures": {
 				"1": {
-					"name": "meta.value.sslang"
-				},
-				"2": {
-					"name": "keyword.other.sslang"
+					"name": "keyword.operator.annotation.sslang"
 				}
 			},
-			"end": "\\)",
+			"end": "[\\)\n]",
 			"name": "meta.type.annotation.sslang",
 			"patterns": [
 				{
