@@ -17,6 +17,9 @@
     },
     {
       "include": "#comment"
+    },
+    {
+      "include": "#string"
     }
   ],
   "repository": {
@@ -31,25 +34,21 @@
       "name": "meta.function.type-definition.sslang",
       "patterns": [
         {
-          "match": "\\-\\>",
-          "name": "keyword.operator.arrow.sslang"
-        },
-        {
           "match": "^\\s+([A-Z][a-zA-Z0-9_']*)\\b",
-          "name": "meta.type.field.sslang",
           "captures": {
             "1": {
-              "name": "constant.constructor.sslang"
+              "name": "constant.data-constructor.sslang"
             }
           }
         },
         {
-          "match": "\\b[a-z_][a-zA-Z0-9_']*\\b",
-          "name": "variable.type.sslang"
+          "include": "#arrow"
         },
         {
-          "match": "\\b[A-Z][a-zA-Z0-9_']*\\b",
-          "name": "storage.type.sslang"
+          "include": "#type-variable"
+        },
+        {
+          "include": "#type-constructor"
         },
         {
           "include": "#comments"
@@ -73,19 +72,7 @@
       "name": "meta.function.extern-declaration.sslang",
       "patterns": [
         {
-          "match": "\\-\\>",
-          "name": "keyword.operator.arrow.sslang"
-        },
-        {
-          "match": "\\b[a-z_][a-zA-Z0-9_']*\\b",
-          "name": "variable.type.sslang"
-        },
-        {
-          "match": "\\b[A-Z][a-zA-Z0-9_']*\\b",
-          "name": "storage.type.sslang"
-        },
-        {
-          "include": "#comments"
+          "include": "#type"
         }
       ]
     },
@@ -136,9 +123,70 @@
         }
       ]
     },
-    "constructor": {
+    "type-constructor": {
       "match": "\\b[A-Z][a-zA-Z0-9_']*\\b",
-      "name": "constant.type-constructor.sslang"
+      "name": "storage.type.sslang"
+    },
+    "data-constructor": {
+      "match": "\\b[A-Z][a-zA-Z0-9_']*\\b",
+      "name": "constant.data-constructor.sslang"
+    },
+    "type-variable": {
+      "match": "\\b[a-z_][a-zA-Z0-9_']*\\b",
+      "name": "variable.type.sslang"
+    },
+    "arrow": {
+      "match": "\\-\\>",
+      "name": "keyword.operator.arrow.sslang"
+    },
+    "string": {
+      "begin": "\"",
+      "end": "\"",
+      "name": "string.quoted.double.sslang",
+      "patterns": [
+        {
+          "name": "constant.character.escape.sslang",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "type": {
+      "patterns": [
+        {
+          "include": "#arrow"
+        },
+        {
+          "include": "#type-constructor"
+        },
+        {
+          "include": "#type-variable"
+        },
+        {
+          "include": "#paren-type"
+        },
+        {
+          "include": "#comment"
+        }
+      ]
+    },
+    "paren-type": {
+      "begin": "\\(",
+      "end": "\\)",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.paren.open"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.paren.open"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#type"
+        }
+      ]
     }
   }
 }

@@ -7,6 +7,7 @@ patterns:
   - include: '#top-c-block'
   - include: '#top-value'
   - include: '#comment'
+  - include: '#string'
 repository:
   # top-level type definition
   top-type:
@@ -17,21 +18,17 @@ repository:
         name: keyword.type.sslang
     name: meta.function.type-definition.sslang
     patterns:
-      # arrows
-      - match: \-\>
-        name: keyword.operator.arrow.sslang
       # data constructors (first uppercase identifier)
       - match: ^\s+([A-Z][a-zA-Z0-9_']*)\b
-        name: meta.type.field.sslang
         captures:
           '1':
-            name: constant.constructor.sslang
+            name: constant.data-constructor.sslang
+      # arrows
+      - include: '#arrow'
       # type variables
-      - match: \b[a-z_][a-zA-Z0-9_']*\b
-        name: variable.type.sslang
+      - include: '#type-variable'
       # types (non-first uppercase identifiers)
-      - match: \b[A-Z][a-zA-Z0-9_']*\b
-        name: storage.type.sslang
+      - include: '#type-constructor'
       - include: '#comments'
   # top-level extern declaration
   top-extern:
@@ -46,16 +43,14 @@ repository:
         name: keyword.other.sslang
     name: meta.function.extern-declaration.sslang
     patterns:
+      - include: '#type'
       # arrows
-      - match: \-\>
-        name: keyword.operator.arrow.sslang
+      # - include: '#arrow'
       # type variables
-      - match: \b[a-z_][a-zA-Z0-9_']*\b
-        name: variable.type.sslang
+      # - include: '#type-variable'
       # types (non-first uppercase identifiers)
-      - match: \b[A-Z][a-zA-Z0-9_']*\b
-        name: storage.type.sslang
-      - include: '#comments'
+      # - include: '#type-constructor'
+      # - include: '#comments'
   # top-level c block
   top-c-block:
     begin: ^(\$\$\$)
@@ -88,6 +83,47 @@ repository:
       - name: comment.block.sslang
         begin: /\*
         end: \*/
-  constructor:
+  # type constructors
+  type-constructor:
     match: \b[A-Z][a-zA-Z0-9_']*\b
-    name: constant.type-constructor.sslang
+    name: storage.type.sslang
+  # data constructors
+  data-constructor:
+    match: \b[A-Z][a-zA-Z0-9_']*\b
+    name: constant.data-constructor.sslang
+  # type variables
+  type-variable:
+    match: \b[a-z_][a-zA-Z0-9_']*\b
+    name: variable.type.sslang
+  # arrow type
+  arrow:
+    match: \-\>
+    name: keyword.operator.arrow.sslang
+  # string literals
+  string:
+    begin: '"'
+    end: '"'
+    name: string.quoted.double.sslang
+    patterns:
+       - name: constant.character.escape.sslang
+         match: \\.
+  # type
+  type:
+    patterns:
+      - include: '#arrow'
+      - include: '#type-constructor'
+      - include: '#type-variable'
+      - include: '#paren-type'
+      - include: '#comment'
+  # paren-type
+  paren-type:
+    begin: \(
+    end: \)
+    beginCaptures:
+      '0':
+        name: punctuation.paren.open
+    endCaptures:
+      '0':
+        name: punctuation.paren.open
+    patterns:
+      - include: '#type'
