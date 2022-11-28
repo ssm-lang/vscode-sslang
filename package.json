@@ -10,16 +10,29 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "sslang",
-      "aliases": ["sslang", "sslang"],
-      "extensions": [".ssl"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "sslang",
-      "scopeName": "source.sslang",
-      "path": "./syntaxes/sslang.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "sslang",
+        "aliases": [
+          "sslang",
+          "sslang"
+        ],
+        "extensions": [
+          ".ssl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "sslang",
+        "scopeName": "source.sslang",
+        "path": "./syntaxes/sslang.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.c": "c",
+          "meta.embedded.inline.c": "c"
+        }
+      }
+    ]
   }
 }

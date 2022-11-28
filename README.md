@@ -21,3 +21,9 @@ git clone git@github.com:ssm-lang/vscode-sslang.git $HOME/.vscode/extensions/vsc
 ## Extension Settings
 
 No extension settings.
+
+## Contributing
+
+VS Code can only load json grammars, but yaml is easier to work with (more concise; has regular expressions, comments and multi-line strings). Therefore, we generate `syntaxes/sslang.tmLanguage.json` from `syntaxes/sslang.tmLanguage.yaml`.
+
+The generation of the json grammar can be done by calling `./build-grammar.sh`.

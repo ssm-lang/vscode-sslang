@@ -1,0 +1,93 @@
+fileTypes: sslang
+name: sslang
+scopeName: source.sslang
+patterns:
+  - include: '#top-type'
+  - include: '#top-extern'
+  - include: '#top-c-block'
+  - include: '#top-value'
+  - include: '#comment'
+repository:
+  # top-level type definition
+  top-type:
+    begin: ^(type)\s+ # leading 'type'
+    end: ^(?=\S) # non-indented line
+    beginCaptures:
+      '1':
+        name: keyword.type.sslang
+    name: meta.function.type-definition.sslang
+    patterns:
+      # arrows
+      - match: \-\>
+        name: keyword.operator.arrow.sslang
+      # data constructors (first uppercase identifier)
+      - match: ^\s+([A-Z][a-zA-Z0-9_']*)\b
+        name: meta.type.field.sslang
+        captures:
+          '1':
+            name: constant.constructor.sslang
+      # type variables
+      - match: \b[a-z_][a-zA-Z0-9_']*\b
+        name: variable.type.sslang
+      # types (non-first uppercase identifiers)
+      - match: \b[A-Z][a-zA-Z0-9_']*\b
+        name: storage.type.sslang
+      - include: '#comments'
+  # top-level extern declaration
+  top-extern:
+    begin: ^(extern)\s+([a-z_][a-zA-Z0-9_']*)\s*(\:)
+    end: ^(?=\S) # non-indented line
+    beginCaptures:
+      '1':
+        name: keyword.extern.sslang
+      '2':
+        name: entity.name.function.sslang
+      '3':
+        name: keyword.other.sslang
+    name: meta.function.extern-declaration.sslang
+    patterns:
+      # arrows
+      - match: \-\>
+        name: keyword.operator.arrow.sslang
+      # type variables
+      - match: \b[a-z_][a-zA-Z0-9_']*\b
+        name: variable.type.sslang
+      # types (non-first uppercase identifiers)
+      - match: \b[A-Z][a-zA-Z0-9_']*\b
+        name: storage.type.sslang
+      - include: '#comments'
+  # top-level c block
+  top-c-block:
+    begin: ^(\$\$\$)
+    end: ^(\$\$\$)
+    beginCaptures:
+      '1':
+        name: keyword.c-block.begin.sslang
+    endCaptures:
+      '1':
+        name: keyword.c-block.end.sslang
+    contentName: meta.embedded.block.c
+    patterns:
+      - include: source.c
+  # top-level value definition
+  top-value:
+    begin: ^([a-z_][a-zA-Z0-9_']*)\s*(\=)\s*
+    end: ^(?=\S)
+    beginCaptures:
+      '1':
+        name: entity.name.function
+      '2':
+        name: keyword.operator.assignment.sslang
+    name: meta.function.sslang
+  # comments
+  comment:
+    patterns:
+      - name: comment.line.double-slash.sslang
+        begin: //
+        end: $
+      - name: comment.block.sslang
+        begin: /\*
+        end: \*/
+  constructor:
+    match: \b[A-Z][a-zA-Z0-9_']*\b
+    name: constant.type-constructor.sslang
